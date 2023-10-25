@@ -27,14 +27,14 @@ public class MyString {
 
 
     // соединение строк
-    public MyString concat(MyString s) {
-        char[] newString = new char[this.str.length + s.length()];
-        System.arraycopy(this.str, 0, newString, 0, this.str.length);
-        System.arraycopy(s.str, 0, newString, this.str.length, s.length());
+    public static MyString concat(MyString s1, MyString s2) {
+        char[] newString = new char[s1.str.length + s2.length()];
+        System.arraycopy(s1.str, 0, newString, 0, s1.str.length);
+        System.arraycopy(s2.str, 0, newString, s1.str.length, s2.length());
         return new MyString(new String(newString));
     }
 
-    public MyString join(MyString s1, MyString s2, char delimiter) {
+    public static MyString join(MyString s1, MyString s2, char delimiter) {
         char[] newString = new char[s1.length() + s2.length() + 1];
         int length = s1.length() + s2.length() + 1;
 
@@ -50,7 +50,7 @@ public class MyString {
         return res;
     }
 
-    public MyString[] split(MyString s, char delimiter) {
+    public static MyString[] split(MyString s, char delimiter) {
         ArrayList<MyString> preres = new ArrayList<>();
         int i = 0;
         int pi = 0;
@@ -72,13 +72,13 @@ public class MyString {
 
 
     // сравнение двух строк
-    public boolean equals(MyString s) {
-        if (this.str.length != s.length()) {
+    public static boolean equals(MyString s1, MyString s2) {
+        if (s1.length() != s2.length()) {
             return false;
         }
 
-        for (int i = 0; i < this.str.length; i++) {
-            if (this.str[i] != s.charAt(i)) {
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
                 return false;
             }
         }
@@ -93,9 +93,9 @@ public class MyString {
 
 
     // индекс передаваемого элемента
-    public int indexOf(char c) {
-        for (int i = 0; i < this.str.length; i++) {
-            if (this.str[i] == c) {
+    public static int indexOf(MyString s ,char c) {
+        for (int i = 0; i < s.str.length; i++) {
+            if (s.str[i] == c) {
                 return i;
             }
         }
