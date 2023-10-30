@@ -70,15 +70,61 @@ public class MyString {
         return res;
     }
 
+    public static MyString replace(MyString s, MyString searchString, MyString replacement) {
+        if (isEmpty(s) || isEmpty(searchString) || replacement == null) {
+            return s;
+        }
+        char[] res = new char[Math.abs(s.length() - (searchString.length() - replacement.length()))];
+
+        int first = -1;
+        int second = -1;
+        boolean flag = false;
+        int j = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == searchString.charAt(j)) {
+                if (!flag) {
+                    first = i;
+                }
+                second = i;
+                flag = true;
+                j++;
+                if (j == searchString.length()) {
+                    i = s.length();
+                }
+            } else {
+                flag = false;
+                first = -1;
+                second = -1;
+                j = 0;
+            }
+        }
+        j = 0;
+        for (int i = 0; i < first; i++) {
+            res[i] = s.charAt(i);
+        }
+        for (int i = first; i < first + replacement.length(); i++) {
+            res[i] = replacement.charAt(j);
+            j++;
+        }
+        for (int i = second; i < res.length; i++) {
+            res[i]  = s.charAt(i+1);
+        }
+
+        return new MyString(new String(res));
+    }
+
+
+
 
     // сравнение двух строк
-    public static boolean equals(MyString s1, MyString s2) {
+    public static boolean equalsIgnoreCase(MyString s1, MyString s2) {
         if (s1.length() != s2.length()) {
             return false;
         }
 
         for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) != s2.charAt(i)) {
+            if (Character.toLowerCase(s1.charAt(i)) != Character.toLowerCase(s2.charAt(i))) {
                 return false;
             }
         }
@@ -87,8 +133,8 @@ public class MyString {
     }
 
     // проверка на пустую строку
-    public boolean isEmpty() {
-        return this.str.length == 0;
+    public static boolean isEmpty(MyString s) {
+        return s.str.length == 0;
     }
 
 
